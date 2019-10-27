@@ -66,7 +66,8 @@ class SubscriberView(FlaskView):
     @login_required
     @route('/playlist/<did>/master.m3u', methods=['GET'])
     def playlist(self, did):
-        playlist = current_user.generate_playlist(did)
+        lb_server_host_and_port = app.config['SUBSCRIBERS_PORTAL_HTTP_SERVER']
+        playlist = current_user.generate_playlist(did, lb_server_host_and_port)
         return Response(playlist, mimetype='application/x-mpequrl'), 200
 
     @login_required
