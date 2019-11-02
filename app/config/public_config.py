@@ -6,7 +6,7 @@ PUBLIC_CONFIG = {'site': {'title': 'FastoTV', 'keywords': 'video,cloud,iptv,play
                              'contact_address': 'Republic of Belarus, Minsk',
                              'community_channel': 'https://discord.gg/cnUXsws',
                              'partners':[{'company': 'Tathya Technologies Pvt Ltd (OPC)', 'website': 'https://tathyatechnologies.com', 'country':'India, Bangladesh'}]},
-                 'project': {'version': '1.2.2', 'version_type': 'release',
+                 'project': {'version': '1.2.3', 'version_type': 'release',
                              'github': {'issues': 'https://github.com/fastogt/fastotv_site_new/issues',
                                         'repo': 'https://github.com/fastogt/fastotv_site_new'}
                              },
