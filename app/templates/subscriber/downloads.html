@@ -55,7 +55,7 @@ Downloads | {{ config['PUBLIC_CONFIG'].site.title }}
                     </div>
                     <!-- version -->
                     <p>
-                        <a href="itms-services://?action=download-manifest&url={{ url_for('static', filename='downloads/ios/manifest.plist', _external=True) }}">iPhone/iPad {{ version }} Installer (.ipa)</a>
+                        <a href="itms-services://?action=download-manifest&url={{ url_for('static', filename='downloads/ios/manifest.plist', _external=True, _scheme='https') }}">iPhone/iPad {{ version }} Installer (.ipa)</a>
                     </p>
                 </div>
 
