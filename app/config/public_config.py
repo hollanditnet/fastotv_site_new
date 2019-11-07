@@ -6,11 +6,11 @@ PUBLIC_CONFIG = {'site': {'title': 'FastoTV', 'keywords': 'video,cloud,iptv,play
                              'contact_address': 'Republic of Belarus, Minsk',
                              'community_channel': 'https://discord.gg/cnUXsws',
                              'partners':[{'company': 'Tathya Technologies Pvt Ltd (OPC)', 'website': 'https://tathyatechnologies.com', 'country':'India, Bangladesh'}]},
-                 'project': {'version': '1.2.3', 'version_type': 'release',
+                 'project': {'version': '1.0.0', 'version_type': 'release',
                              'github': {'issues': 'https://github.com/fastogt/fastotv_site_new/issues',
                                         'repo': 'https://github.com/fastogt/fastotv_site_new'}
                              },
-                 'player': {'name': 'FastoTV', 'name_lowercase': 'fastotv', 'version': '1.13.0',
+                 'player': {'name': 'FastoTV', 'name_lowercase': 'fastotv', 'version': '1.13.1',
                             'version_type': 'release',
                             'android_playstore_link': 'https://play.google.com/store/apps/details?id=com.fastotv'}
                  }
