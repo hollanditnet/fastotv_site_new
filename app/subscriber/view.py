@@ -21,7 +21,8 @@ class SubscriberView(FlaskView):
         streams = []
         for serv in current_user.servers:
             for stream in serv.streams:
-                streams.append(stream.to_dict())
+                if stream.visible:
+                    streams.append(stream.to_dict())
 
         selected_streams = []
         for stream in current_user.streams:
