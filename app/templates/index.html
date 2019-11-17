@@ -110,6 +110,11 @@
             <li><a href="{{ partner.website }}">{{ partner.company }} ({{ partner.country }} region)</a></li>
             {% endfor %}
             </p>
+            <p class="keep-left">Brands:
+                {% for brand in config['PUBLIC_CONFIG'].support.brands %}
+            <li><a href="{{ brand.website }}">{{ brand.name }} ({{ brand.country }})</a></li>
+            {% endfor %}
+            </p>
         </div>
     </div>
     <div class="container">
