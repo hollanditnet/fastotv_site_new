@@ -28,9 +28,21 @@ class SubscriberView(FlaskView):
     @login_required
     def channels(self):
         streams = []
+
+        def for_subscribers_stream(stream):
+            if not stream.visible:
+                return False
+            stream_type = stream.get_type()
+            return stream_type == constants.StreamType.PROXY or stream_type == constants.StreamType.VOD_PROXY or \
+                   stream_type == constants.StreamType.RELAY or stream_type == constants.StreamType.ENCODE or \
+                   stream_type == constants.StreamType.TIMESHIFT_PLAYER or \
+                   stream_type == constants.StreamType.CATCHUP or stream_type == constants.StreamType.VOD_RELAY or \
+                   stream_type == constants.StreamType.VOD_ENCODE or stream_type == constants.StreamType.COD_RELAY or \
+                   stream_type == constants.StreamType.COD_ENCODE
+
         for serv in current_user.servers:
             for stream in serv.streams:
-                if stream.visible:
+                if for_subscribers_stream(stream):
                     streams.append(stream.to_dict())
 
         selected_streams = []

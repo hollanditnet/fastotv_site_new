@@ -16,43 +16,105 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
     <div class="panel-body">
         <div class="container-fluid">
             <div class="row well">
-                <div class="row">
-                    <a href="{{ url_for('SubscriberView:profile') }}" class="btn btn-warning btn-md pull-right">
-                        Profile
-                    </a>
-                    <h2>Available channels:</h2>
-                    <table id='proxy_table' class="table">
-                        <thead>
-                        <tr>
-                            <th class="stream_number">#</th>
-                            <th class="stream_name">Name</th>
-                            <th class="stream_group_title">Group</th>
-                            <th class="stream_price">Price ($)</th>
-                            <th class="stream_in_playlist">In playlist</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for stream in streams %}
-                        <tr id='{{ stream.id }}'>
-                            <td>{{ loop.index }}</td>
-                            <td><img width="32px" height="32px" src="{{ stream.icon }}"/>{{ stream.name }}</td>
-                            <td>{{ stream.group }}</td>
-                            <td>{{ stream.price }}</td>
-                            <td>
-                                <input type="checkbox" name="official_channel" channel_id="{{ stream.id }}"
-                                       onclick="on_total_price_update()" value={{ stream.price }}
-                                       {% if stream.id in selected_streams %}
-                                       checked
-                                       {% endif %}
-                                >
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                <a href="{{ url_for('SubscriberView:profile') }}" class="btn btn-warning btn-md pull-right">
+                    Profile
+                </a>
+                <h2>Available channels/vods:</h2>
+                <div class="row well with-nav-tabs">
+                    <div class="panel-heading">
+                        <ul class="nav nav-tabs">
+                            <li class="active"><a href="#streams" data-toggle="tab">Streams</a></li>
+                            <li><a href="#vods" data-toggle="tab">Vods</a></li>
+                        </ul>
+                        <div class="panel-body">
+                            <div class="tab-content">
+                                <div class="tab-pane fade in active" id="streams">
+                                    <div class="row">
+                                        <table id='streams_table' class="table">
+                                            <thead>
+                                            <tr>
+                                                <th class="stream_number">#</th>
+                                                <th class="stream_name">Name</th>
+                                                <th class="stream_group_title">Group</th>
+                                                <th class="stream_price">Price ($)</th>
+                                                <th class="stream_in_playlist">In playlist</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for stream in streams %}
+                                            {% if (stream.type == 0 or stream.type == 2 or stream.type == 3 or
+                                            stream.type == 4 or stream.type == 6 or stream.type == 10 or stream.type
+                                            == 11) %}
+                                            <tr id='{{ stream.id }}'>
+                                                <td>{{ loop.index }}</td>
+                                                <td><img width="32px" height="32px" src="{{ stream.icon }}"/>{{
+                                                    stream.name }}
+                                                </td>
+                                                <td>{{ stream.group }}</td>
+                                                <td>{{ stream.price }}</td>
+                                                <td>
+                                                    <input type="checkbox" name="official_channel"
+                                                           channel_id="{{ stream.id }}"
+                                                           onclick="on_total_price_update()" value={{ stream.price
+                                                           }}
+                                                           {% if stream.id in selected_streams %}
+                                                           checked
+                                                           {% endif %}
+                                                    >
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="vods">
+                                    <div class="row">
+                                        <table id='vods_table' class="table">
+                                            <thead>
+                                            <tr>
+                                                <th class="stream_number">#</th>
+                                                <th class="stream_name">Name</th>
+                                                <th class="stream_group_title">Group</th>
+                                                <th class="stream_price">Price ($)</th>
+                                                <th class="stream_in_playlist">In playlist</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for vod in streams %}
+                                            {% if (vod.type == 1 or vod.type == 8 or vod.type == 9) %}
+                                            <tr id='{{ vod.id }}'>
+                                                <td>{{ loop.index }}</td>
+                                                <td><img width="64px" height="64px" src="{{ vod.icon }}"/>{{
+                                                    vod.name }}
+                                                </td>
+                                                <td>{{ vod.group }}</td>
+                                                <td>{{ vod.price }}</td>
+                                                <td>
+                                                    <input type="checkbox" name="official_channel"
+                                                           channel_id="{{ vod.id }}"
+                                                           onclick="on_total_price_update()" value={{ vod.price
+                                                           }}
+                                                           {% if vod.id in selected_streams %}
+                                                           checked
+                                                           {% endif %}
+                                                    >
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
-                    <form class="form-inline" action="{{ url_for('SubscriberView:apply_channels') }}" method="post">
+                    <form class="form-inline" action="{{ url_for('SubscriberView:apply_channels') }}"
+                          method="post">
                         <div class="col-md-10">
                             <div class="form-group">
                                 Price: <input class="form-control" id="total" value=0 disabled> $ per month
@@ -98,5 +160,11 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
         on_total_price_update();
     }
     on_load()
+
+
+
+
+
+
 </script>
 {% endblock %}
