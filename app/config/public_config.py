@@ -10,7 +10,7 @@ PUBLIC_CONFIG = {'site': {'title': 'FastoTV', 'keywords': 'video,cloud,iptv,play
                              'github': {'issues': 'https://github.com/fastogt/fastotv_site_new/issues',
                                         'repo': 'https://github.com/fastogt/fastotv_site_new'}
                              },
-                 'player': {'name': 'FastoTV', 'name_lowercase': 'fastotv', 'version': '1.15.0',
+                 'player': {'name': 'FastoTV', 'name_lowercase': 'fastotv', 'version': '1.16.0',
                             'version_type': 'release',
                             'android_playstore_link': 'https://play.google.com/store/apps/details?id=com.fastotv'}
                  }
