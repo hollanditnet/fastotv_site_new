@@ -7,8 +7,8 @@ from app.common.subscriber.entry import Device
 from app.common.service.forms import UploadM3uForm
 from app.common.utils.m3u_parser import M3uParser
 from app.common.utils.utils import is_valid_http_url
-from app.common.stream.entry import ProxyStream
-from app.common.stream.forms import ProxyStreamForm
+from app.common.stream.entry import ProxyStream, ProxyVodStream
+from app.common.stream.forms import ProxyStreamForm, ProxyVodStreamForm
 import app.common.constants as constants
 from app import app
 import json
@@ -53,7 +53,8 @@ class SubscriberView(FlaskView):
     @login_required
     def my_channels(self):
         form = UploadM3uForm(type=constants.StreamType.PROXY)
-        form.type.render_kw = {'disabled': 'disabled'}
+        form.type.choices = [(constants.StreamType.PROXY, 'Proxy Stream'),
+                             (constants.StreamType.VOD_PROXY, 'Proxy Vod')]
         streams = []
         for stream in current_user.own_streams:
             streams.append(stream.to_dict())
@@ -64,7 +65,6 @@ class SubscriberView(FlaskView):
     @route('/upload_files', methods=['POST'])
     def upload_files(self):
         form = UploadM3uForm()
-        form.type.validators = []
         if form.validate_on_submit():
             files = request.files.getlist("files")
             for file in files:
@@ -74,7 +74,10 @@ class SubscriberView(FlaskView):
 
                 default_logo_path = self.default_logo_url()
                 for file in m3u_parser.files:
-                    stream = ProxyStream.make_stream(None)
+                    if form.type.data == constants.StreamType.PROXY:
+                        stream = ProxyStream.make_stream(None)
+                    else:
+                        stream = ProxyVodStream.make_stream(None)
 
                     input_url = file['link']
                     stream.output.urls[0].uri = input_url
@@ -124,8 +127,8 @@ class SubscriberView(FlaskView):
         return jsonify(status='ok'), 200
 
     @login_required
-    @route('/add/own/stream', methods=['GET', 'POST'])
-    def add_own_stream(self):
+    @route('/add/own/proxy_stream', methods=['GET', 'POST'])
+    def add_own_proxy_stream(self):
         stream = ProxyStream.make_stream(None)
         form = ProxyStreamForm(obj=stream)
         form.price.validators = []
@@ -138,13 +141,31 @@ class SubscriberView(FlaskView):
         return render_template('stream/proxy/add.html', form=form)
 
     @login_required
+    @route('/add/own/proxy_vod', methods=['GET', 'POST'])
+    def add_own_proxy_vod(self):
+        stream = ProxyVodStream.make_stream(None)
+        form = ProxyVodStreamForm(obj=stream)
+        form.price.validators = []
+        if request.method == 'POST' and form.validate_on_submit():
+            new_entry = form.make_entry()
+            new_entry.save()
+            current_user.add_own_stream(new_entry)
+            return jsonify(status='ok'), 200
+
+        return render_template('stream/vod_proxy/add.html', form=form)
+
+    @login_required
     @route('/edit/own/<sid>', methods=['GET', 'POST'])
     def edit(self, sid):
         stream = current_user.find_own_stream(sid)
         if not stream:
             return jsonify(status='failed'), 404
 
-        form = ProxyStreamForm(obj=stream)
+        if stream.type == constants.StreamType.PROXY:
+            form = ProxyStreamForm(obj=stream)
+        else:
+            form = ProxyVodStreamForm(obj=stream)
+
         form.price.validators = []
         if request.method == 'POST' and form.validate_on_submit():
             stream = form.update_entry(stream)

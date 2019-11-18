@@ -21,44 +21,109 @@ My channels | {{ config['PUBLIC_CONFIG'].site.title }}
                         Profile
                     </a>
                     <h2>Available private channels:</h2>
-                    <table id='proxy_table' class="table">
-                        <thead>
-                        <tr>
-                            <th class="stream_number">#</th>
-                            <th class="stream_name">Name</th>
-                            <th class="stream_group_title">Group</th>
-                            <th class="stream_actions">Actions</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {% for stream in streams %}
-                        <tr id='{{ stream.id }}'>
-                            <td>{{ loop.index }}</td>
-                            <td><img width="32px" height="32px" src="{{ stream.icon }}"/>{{ stream.name }}</td>
-                            <td>{{ stream.group }}</td>
-                            <td>
-                                <button type="submit" class="btn btn-success btn-xs"
-                                        onclick="edit_stream('{{ stream.id }}')">
-                                    {% trans %}Edit{% endtrans %}
-                                </button>
-                                <button type="submit" class="btn btn-danger btn-xs"
-                                        onclick="remove_stream('{{ stream.id }}')">
-                                    {% trans %}Remove{% endtrans %}
-                                </button>
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        </tbody>
-                    </table>
+                    <div class="row well with-nav-tabs">
+                        <div class="panel-heading">
+                            <ul class="nav nav-tabs">
+                                <li class="active"><a href="#streams" data-toggle="tab">Streams</a></li>
+                                <li><a href="#vods" data-toggle="tab">Vods</a></li>
+                            </ul>
+                            <div class="panel-body">
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="streams">
+                                        <div class="row">
+                                            <table id='streams_table' class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th class="stream_number">#</th>
+                                                    <th class="stream_name">Name</th>
+                                                    <th class="stream_group_title">Group</th>
+                                                    <th class="stream_actions">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for stream in streams %}
+                                                {% if (stream.type == 0 or stream.type == 2 or stream.type == 3 or
+                                                stream.type == 4 or stream.type == 6 or stream.type == 10 or stream.type
+                                                == 11) %}
+                                                <tr id='{{ stream.id }}'>
+                                                    <td>{{ loop.index }}</td>
+                                                    <td><img width="32px" height="32px" src="{{ stream.icon }}"/>{{
+                                                        stream.name }}
+                                                    </td>
+                                                    <td>{{ stream.group }}</td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-success btn-xs"
+                                                                onclick="edit_stream('{{ stream.id }}')">
+                                                            {% trans %}Edit{% endtrans %}
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger btn-xs"
+                                                                onclick="remove_stream('{{ stream.id }}')">
+                                                            {% trans %}Remove{% endtrans %}
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="vods">
+                                        <div class="row">
+                                            <table id='vods_table' class="table">
+                                                <thead>
+                                                <tr>
+                                                    <th class="stream_number">#</th>
+                                                    <th class="stream_name">Name</th>
+                                                    <th class="stream_group_title">Group</th>
+                                                    <th class="stream_actions">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                {% for vod in streams %}
+                                                {% if (vod.type == 1 or vod.type == 8 or vod.type == 9) %}
+                                                <tr id='{{ vod.id }}'>
+                                                    <td>{{ loop.index }}</td>
+                                                    <td><img width="64px" height="64px" src="{{ vod.icon }}"/>{{
+                                                        vod.name }}
+                                                    </td>
+                                                    <td>{{ vod.group }}</td>
+                                                    <td>
+                                                        <button type="submit" class="btn btn-success btn-xs"
+                                                                onclick="edit_stream('{{ vod.id }}')">
+                                                            {% trans %}Edit{% endtrans %}
+                                                        </button>
+                                                        <button type="submit" class="btn btn-danger btn-xs"
+                                                                onclick="remove_stream('{{ vod.id }}')">
+                                                            {% trans %}Remove{% endtrans %}
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                                {% endif %}
+                                                {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <button type="submit" class="btn btn-success"
-                                onclick="add_stream()">
-                            {% trans %}Add{% endtrans %}
+                                onclick="add_proxy_stream()">
+                            {% trans %}Add proxy stream{% endtrans %}
                         </button>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
+                        <button type="submit" class="btn btn-success"
+                                onclick="add_proxy_vod()">
+                            {% trans %}Add proxy vod{% endtrans %}
+                        </button>
+                    </div>
+                    <div class="col-md-4">
                         <button type="submit" class="btn btn-danger pull-right"
                                 onclick="remove_all_streams()">
                             {% trans %}Remove all streams{% endtrans %}
@@ -75,6 +140,9 @@ My channels | {{ config['PUBLIC_CONFIG'].site.title }}
                     {{ form.hidden_tag() }}
                     <div class="col-md-3">
                         {{ form.files }}
+                    </div>
+                    <div class="col-md-3">
+                        {{ form.type }}
                     </div>
                     <div class="col-md-3">
                         {{ form_field(form.upload, class="btn btn-success") }}
@@ -114,8 +182,20 @@ function add_stream_entry(url) {
     });
 }
 
-function add_stream() {
-    var url = "{{ url_for('SubscriberView:add_own_stream') }}";
+function add_proxy_stream() {
+    var url = "{{ url_for('SubscriberView:add_own_proxy_stream') }}";
+    $.get(url, function(data) {
+        $('#stream_dialog .modal-content').html(data);
+        $('#stream_dialog').modal();
+        $('#submit').click(function(event) {
+            event.preventDefault();
+            add_stream_entry(url);
+        })
+    });
+}
+
+function add_proxy_vod() {
+    var url = "{{ url_for('SubscriberView:add_own_proxy_vod') }}";
     $.get(url, function(data) {
         $('#stream_dialog .modal-content').html(data);
         $('#stream_dialog').modal();
