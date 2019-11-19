@@ -42,7 +42,7 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                 <div class="row">
                     <div class="row">
                         <div class="col-sm-6">
-                            1) Please create device.
+                            1) Please create a device.
                         </div>
                         <div class="col-sm-6">
                             <form action="{{ url_for('SubscriberView:devices') }}" method="get">
@@ -87,7 +87,7 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
                     <br>
                     <div class="row">
                         <div class="col-sm-6">
-                            5) Add user section into config file: (~/.fastotv/fastotv.ini).
+                            5) (PC version) Add user section into config file: (~/.fastotv/fastotv.ini).
                         </div>
                         <div class="col-sm-6">
                             {% if current_user.devices|length == 0 %}
