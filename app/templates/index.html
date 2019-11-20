@@ -93,7 +93,17 @@
             <img src="{{ url_for('static', filename='images/promo/pc.png') }}" width="50%">
             <p>
             <p>Android:</p>
-            <img src="{{ url_for('static', filename='images/promo/android.png') }}" width="50%">
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', filename='images/promo/android.png') }}" width="50%">
+                </div>
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', filename='images/promo/android_categories.png') }}" width="50%">
+                </div>
+                <div class="col-md-4">
+                    <img src="{{ url_for('static', filename='images/promo/android_vods.jpg') }}" width="50%">
+                </div>
+            </div>
             <p>
                 We are waiting for your feedback! Please write any issues and proposals to
                 <a href="{{ config['PUBLIC_CONFIG'].project.github.issues }}">GitHub Issues</a>.
