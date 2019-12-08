@@ -161,7 +161,7 @@ class SubscriberView(FlaskView):
         if not stream:
             return jsonify(status='failed'), 404
 
-        if stream.type == constants.StreamType.PROXY:
+        if stream.get_type() == constants.StreamType.PROXY:
             form = ProxyStreamForm(obj=stream)
         else:
             form = ProxyVodStreamForm(obj=stream)
