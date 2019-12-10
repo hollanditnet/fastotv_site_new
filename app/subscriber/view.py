@@ -73,7 +73,7 @@ class SubscriberView(FlaskView):
                 m3u_parser.load_content(file.read().decode('utf-8'))
                 m3u_parser.parse()
 
-                default_logo_path = self.default_preview_log_url()
+                default_logo_path = SubscriberView.default_preview_log_url()
                 for file in m3u_parser.files:
                     if form.type.data == constants.StreamType.PROXY:
                         stream = ProxyStream.make_stream(None)
