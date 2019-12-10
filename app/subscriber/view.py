@@ -14,13 +14,13 @@ from app import app
 import json
 
 
+def default_preview_log_url():
+    return url_for('static', filename='images/unknown_preview.png', _external=True)
+
+
 # routes
 class SubscriberView(FlaskView):
     route_base = "/subscriber"
-
-    @staticmethod
-    def default_preview_log_url():
-        return url_for('static', filename='images/unknown_preview.png', _external=True)
 
     @login_required
     def profile(self):
@@ -73,7 +73,7 @@ class SubscriberView(FlaskView):
                 m3u_parser.load_content(file.read().decode('utf-8'))
                 m3u_parser.parse()
 
-                default_logo_path = SubscriberView.default_preview_log_url()
+                default_logo_path = default_preview_log_url()
                 for file in m3u_parser.files:
                     if form.type.data == constants.StreamType.PROXY:
                         stream = ProxyStream.make_stream(None)
