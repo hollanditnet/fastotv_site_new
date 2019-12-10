@@ -18,8 +18,9 @@ import json
 class SubscriberView(FlaskView):
     route_base = "/subscriber"
 
-    def default_logo_url(self):
-        return url_for('static', filename='images/unknown_channel.png', _external=True)
+    @staticmethod
+    def default_preview_log_url():
+        return url_for('static', filename='images/unknown_preview.png', _external=True)
 
     @login_required
     def profile(self):
@@ -72,7 +73,7 @@ class SubscriberView(FlaskView):
                 m3u_parser.load_content(file.read().decode('utf-8'))
                 m3u_parser.parse()
 
-                default_logo_path = self.default_logo_url()
+                default_logo_path = self.default_preview_log_url()
                 for file in m3u_parser.files:
                     if form.type.data == constants.StreamType.PROXY:
                         stream = ProxyStream.make_stream(None)
