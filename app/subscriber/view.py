@@ -14,10 +14,6 @@ from app import app
 import json
 
 
-def default_preview_log_url():
-    return url_for('static', filename='images/unknown_preview.png', _external=True)
-
-
 # routes
 class SubscriberView(FlaskView):
     route_base = "/subscriber"
@@ -73,7 +69,7 @@ class SubscriberView(FlaskView):
                 m3u_parser.load_content(file.read().decode('utf-8'))
                 m3u_parser.parse()
 
-                default_logo_path = default_preview_log_url()
+                default_logo_path = constants.DEFAULT_STREAM_PREVIEW_ICON_URL
                 for file in m3u_parser.files:
                     if form.type.data == constants.StreamType.PROXY:
                         stream = ProxyStream.make_stream(None)
