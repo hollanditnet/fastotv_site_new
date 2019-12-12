@@ -26,6 +26,18 @@ Signup | {{ config['PUBLIC_CONFIG'].site.title }}
                 </div>
                 <br>
                 <div class="form-group  required text-left">
+                    <label class="control-label" for="first_name">{{ form.first_name.label }}</label>
+                    <input class="form-control" id="first_name" name="first_name"
+                           placeholder="{% trans %}Enter first name.{% endtrans %}" required value="">
+                </div>
+                <br>
+                <div class="form-group  required text-left">
+                    <label class="control-label" for="last_name">{{ form.last_name.label }}</label>
+                    <input class="form-control" id="last_name" name="last_name"
+                           placeholder="{% trans %}Enter last name.{% endtrans %}" required value="">
+                </div>
+                <br>
+                <div class="form-group  required text-left">
                     <label class="control-label" for="password">{{ form.password.label }}</label>
                     <input class="form-control" id="password" name="password"
                            placeholder="{% trans %}Enter a password.{% endtrans %}" required type="password" value="">

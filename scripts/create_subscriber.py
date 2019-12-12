@@ -14,6 +14,9 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog=PROJECT_NAME, usage='%(prog)s [options]')
     parser.add_argument('--mongo_uri', help='MongoDB credentials', default='mongodb://localhost:27017/iptv')
     parser.add_argument('--email', help='Subscriber email')
+    parser.add_argument('--first_name', help='First name')
+    parser.add_argument('--last_name', help='Last name')
+    parser.add_argument('--language', help='Language')
     parser.add_argument('--password', help='Subscriber password')
     parser.add_argument('--country', help='Subscriber country', default='US')
 
@@ -21,6 +24,8 @@ if __name__ == '__main__':
 
     mongo = connect(host=argv.mongo_uri)
     if mongo:
-        new_user = SubscriberUser.make_subscriber(email=argv.email, password=argv.password, country=argv.country)
+        new_user = SubscriberUser.make_subscriber(email=argv.email, first_name=argv.first_name,
+                                                  last_name=argv.last_name, password=argv.password,
+                                                  country=argv.country, language=argv.language)
         new_user.status = SubscriberUser.Status.ACTIVE
         new_user.save()
