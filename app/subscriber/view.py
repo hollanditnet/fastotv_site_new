@@ -116,7 +116,7 @@ class SubscriberView(FlaskView):
             return jsonify(status='failed', error='Invalid input(country required)'), 400
 
         for sid in sids:
-            current_user.remove_own_stream(sid)
+            current_user.remove_own_stream_by_id(ObjectId(sid))
         return jsonify(status='ok'), 200
 
     @login_required
