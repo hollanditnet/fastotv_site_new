@@ -44,7 +44,8 @@ class SubscriberView(FlaskView):
 
         selected_streams = []
         for stream in current_user.streams:
-            selected_streams.append(str(stream.id))
+            sid = str(stream.sid.id)
+            selected_streams.append(sid)
         return render_template('subscriber/channels.html', streams=streams, selected_streams=selected_streams)
 
     @login_required
@@ -178,7 +179,7 @@ class SubscriberView(FlaskView):
         json_str = request.form['apply_channels_official_ids']
         if json_str:
             for sid in json.loads(json_str):
-                current_user.streams.append(ObjectId(sid))
+                current_user.add_official_stream_by_id(ObjectId(sid))
         current_user.save()
         return redirect(url_for('SubscriberView:channels'))
 
