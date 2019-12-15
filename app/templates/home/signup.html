@@ -20,12 +20,6 @@ Signup | {{ config['PUBLIC_CONFIG'].site.title }}
             <form action="" method="post" class="form" role="form">
                 {{ form.hidden_tag() }}
                 <div class="form-group  required text-left">
-                    <label class="control-label" for="email">{{ form.email.label }}</label>
-                    <input class="form-control" id="email" name="email"
-                           placeholder="{% trans %}Your registered email.{% endtrans %}" required type="text" value="">
-                </div>
-                <br>
-                <div class="form-group  required text-left">
                     <label class="control-label" for="first_name">{{ form.first_name.label }}</label>
                     <input class="form-control" id="first_name" name="first_name"
                            placeholder="{% trans %}Enter first name.{% endtrans %}" required value="">
@@ -35,6 +29,12 @@ Signup | {{ config['PUBLIC_CONFIG'].site.title }}
                     <label class="control-label" for="last_name">{{ form.last_name.label }}</label>
                     <input class="form-control" id="last_name" name="last_name"
                            placeholder="{% trans %}Enter last name.{% endtrans %}" required value="">
+                </div>
+                <br>
+                <div class="form-group  required text-left">
+                    <label class="control-label" for="email">{{ form.email.label }}</label>
+                    <input class="form-control" id="email" name="email"
+                           placeholder="{% trans %}Your registered email.{% endtrans %}" required type="text" value="">
                 </div>
                 <br>
                 <div class="form-group  required text-left">
