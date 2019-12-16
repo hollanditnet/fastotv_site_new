@@ -54,7 +54,7 @@ class SubscriberView(FlaskView):
         form.type.choices = [(constants.StreamType.PROXY, 'Proxy Stream'),
                              (constants.StreamType.VOD_PROXY, 'Proxy Vod')]
         streams = []
-        for stream in current_user.own_streams:
+        for stream in current_user.own_streams():
             streams.append(stream.to_dict())
 
         return render_template('subscriber/my_channels.html', form=form, streams=streams)
@@ -155,7 +155,7 @@ class SubscriberView(FlaskView):
     @login_required
     @route('/edit/own/<sid>', methods=['GET', 'POST'])
     def edit(self, sid):
-        stream = current_user.find_own_stream(sid)
+        stream = current_user.find_own_stream(ObjectId(sid))
         if not stream:
             return jsonify(status='failed'), 404
 
