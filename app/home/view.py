@@ -158,7 +158,8 @@ class HomeView(FlaskView):
                 return redirect(url_for('HomeView:signin'))
 
             new_user = SubscriberUser.make_subscriber(email, form.first_name.data, form.last_name.data,
-                                                      form.password.data, form.country.data, form.language.data)
+                                                      form.password.data, form.country.data, form.language.data,
+                                                      form.max_devices_count.data)
             new_user.save()
 
             servers = ServiceSettings.objects()
