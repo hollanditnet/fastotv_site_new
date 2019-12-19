@@ -27,6 +27,8 @@ class SubscriberView(FlaskView):
         streams = []
 
         def for_subscribers_stream(stream):
+            if not stream:
+                return False
             if not stream.visible:
                 return False
             stream_type = stream.get_type()
