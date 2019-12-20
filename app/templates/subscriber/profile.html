@@ -19,16 +19,16 @@ Profile | {{ config['PUBLIC_CONFIG'].site.title }}
             <div class="row well">
                 <div class="row">
                     <div class="col-md-8">
-                        <p>{% trans %}Welcome{% endtrans %} {{ current_user.email }}</p>
+                        <p>Welcome {{ current_user.email }}</p>
                     </div>
                     <div class="col-md-1">
                         <a href="{{ url_for('SubscriberView:logout') }}" class="btn btn-warning" role="button">
-                            {% trans %}Logout{% endtrans %}
+                            Logout
                         </a>
                     </div>
                     <div class="col-md-1">
                         <a href="{{ url_for('SubscriberView:remove') }}" class="btn btn-danger" role="button">
-                            {% trans %}Delete{% endtrans %}
+                            Delete
                         </a>
                     </div>
                 </div>

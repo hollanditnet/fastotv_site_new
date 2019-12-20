@@ -54,11 +54,11 @@ My channels | {{ config['PUBLIC_CONFIG'].site.title }}
                                                     <td>
                                                         <button type="submit" class="btn btn-success btn-xs"
                                                                 onclick="edit_stream('{{ stream.id }}')">
-                                                            {% trans %}Edit{% endtrans %}
+                                                            Edit
                                                         </button>
                                                         <button type="submit" class="btn btn-danger btn-xs"
                                                                 onclick="remove_stream('{{ stream.id }}')">
-                                                            {% trans %}Remove{% endtrans %}
+                                                            Remove
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -91,11 +91,11 @@ My channels | {{ config['PUBLIC_CONFIG'].site.title }}
                                                     <td>
                                                         <button type="submit" class="btn btn-success btn-xs"
                                                                 onclick="edit_stream('{{ vod.id }}')">
-                                                            {% trans %}Edit{% endtrans %}
+                                                            Edit
                                                         </button>
                                                         <button type="submit" class="btn btn-danger btn-xs"
                                                                 onclick="remove_stream('{{ vod.id }}')">
-                                                            {% trans %}Remove{% endtrans %}
+                                                            Remove
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -114,26 +114,26 @@ My channels | {{ config['PUBLIC_CONFIG'].site.title }}
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-success"
                                 onclick="add_proxy_stream()">
-                            {% trans %}Add proxy stream{% endtrans %}
+                            Add proxy stream
                         </button>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-success"
                                 onclick="add_proxy_vod()">
-                            {% trans %}Add proxy vod{% endtrans %}
+                            Add proxy vod
                         </button>
                     </div>
                     <div class="col-md-4">
                         <button type="submit" class="btn btn-danger pull-right"
                                 onclick="remove_all_streams()">
-                            {% trans %}Remove all streams{% endtrans %}
+                            Remove all streams
                         </button>
                     </div>
                 </div>
             </div>
             <div class="row well">
-                <h3>{% trans %}Upload m3u files{% endtrans %}</h3>
-                <p>{% trans %}Note: Please upload m3u files for player.{% endtrans %}</p>
+                <h3>Upload m3u files</h3>
+                <p>Note: Please upload m3u files for player.</p>
                 {{ util.flashed_messages(dismissible=True, container=False) }}
                 <form action="{{ url_for('SubscriberView:upload_files') }}" method="POST" class="form" role="form"
                       enctype="multipart/form-data">

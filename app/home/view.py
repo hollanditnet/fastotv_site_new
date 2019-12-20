@@ -2,12 +2,11 @@ from flask_classy import FlaskView, route
 from flask import render_template, request, redirect, url_for, flash, session, send_from_directory
 from flask_login import current_user
 from flask_mail import Message
-from flask_babel import gettext
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 
 import app.common.constants as constants
 from app.common.utils.utils import is_valid_email, get_country_code_by_remote_addr
-from app import app, mail, login_manager, babel
+from app import app, mail, login_manager
 from app.home.forms import ContactForm
 from app.common.provider.entry import Provider  # forward declaration in ServersSettings
 from app.common.service.entry import ServiceSettings
@@ -38,15 +37,15 @@ def post_login(form: SigninForm):
     email = form.email.data.lower()
     check_user = SubscriberUser.objects(email=email, class_check=False).first()
     if not check_user:
-        flash_error(gettext(u'User not found.'))
+        flash_error('User not found.')
         return render_template('home/signin.html', form=form)
 
     if check_user.status == SubscriberUser.Status.NOT_ACTIVE:
-        flash_error(gettext(u'User not active.'))
+        flash_error('User not active.')
         return render_template('home/signin.html', form=form)
 
     if not SubscriberUser.check_password_hash(check_user['password'], form.password.data):
-        flash_error(gettext(u'Invalid password.'))
+        flash_error('Invalid password.')
         return render_template('home/signin.html', form=form)
 
     login_user_wrap(check_user)
@@ -150,7 +149,7 @@ class HomeView(FlaskView):
 
             email = form.email.data.lower()
             if not is_valid_email(email, False):
-                flash_error(gettext(u'Invalid email.'))
+                flash_error('Invalid email.')
                 return render_template('home/signup.html', form=form)
 
             existing_user = SubscriberUser.objects(email=email, class_check=False).first()
@@ -172,9 +171,9 @@ class HomeView(FlaskView):
             html = render_template('home/email/activate.html', confirm_url=confirm_url,
                                    contact_email=config['support']['contact_email'], title=config['site']['title'],
                                    company=config['company']['title'])
-            msg = Message(subject=gettext(u'Confirm Email'), recipients=[email], html=html)
+            msg = Message(subject='Confirm Email', recipients=[email], html=html)
             mail.send(msg)
-            flash_success(gettext(u'Please check email: {0}.'.format(email)))
+            flash_success('Please check email: {0}.'.format(email))
             return redirect(url_for('HomeView:signin'))
 
         return render_template('home/signup.html', form=form)
@@ -183,23 +182,6 @@ class HomeView(FlaskView):
 @login_manager.user_loader
 def load_user(user_id):
     return SubscriberUser.objects(pk=user_id, class_check=False).first()
-
-
-@babel.localeselector
-def get_locale():
-    # if a user is logged in, use the locale from the user settings
-    if current_user and current_user.is_authenticated:
-        lc = current_user.language
-        return lc
-
-    if session.get('language'):
-        lang = session['language']
-        return lang
-
-    # otherwise try to guess the language from the user accept
-    # header the browser transmits.  We support de/fr/en in this
-    # example.  The best match wins.
-    return request.accept_languages.best_match(constants.AVAILABLE_LOCALES)
 
 
 def page_not_found(e):

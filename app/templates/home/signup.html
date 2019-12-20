@@ -14,33 +14,33 @@ Signup | {{ config['PUBLIC_CONFIG'].site.title }}
             </h1>
         </div>
         <div class="panel-body">
-            <h3>{% trans %}Sign Up{% endtrans %}</h3>
-            <p>{% trans %}Note: Your data isn't going anywhere.{% endtrans %}</p>
+            <h3>Sign Up</h3>
+            <p>Note: Your data isn't going anywhere.</p>
             {{ util.flashed_messages(dismissible=True, container=False) }}
             <form action="" method="post" class="form" role="form">
                 {{ form.hidden_tag() }}
                 <div class="form-group  required text-left">
                     <label class="control-label" for="first_name">{{ form.first_name.label }}</label>
                     <input class="form-control" id="first_name" name="first_name"
-                           placeholder="{% trans %}Enter first name.{% endtrans %}" required value="">
+                           placeholder="Enter first name." required value="">
                 </div>
                 <br>
                 <div class="form-group  required text-left">
                     <label class="control-label" for="last_name">{{ form.last_name.label }}</label>
                     <input class="form-control" id="last_name" name="last_name"
-                           placeholder="{% trans %}Enter last name.{% endtrans %}" required value="">
+                           placeholder="Enter last name." required value="">
                 </div>
                 <br>
                 <div class="form-group  required text-left">
                     <label class="control-label" for="email">{{ form.email.label }}</label>
                     <input class="form-control" id="email" name="email"
-                           placeholder="{% trans %}Your registered email.{% endtrans %}" required type="text" value="">
+                           placeholder="Your registered email." required type="text" value="">
                 </div>
                 <br>
                 <div class="form-group  required text-left">
                     <label class="control-label" for="password">{{ form.password.label }}</label>
                     <input class="form-control" id="password" name="password"
-                           placeholder="{% trans %}Enter a password.{% endtrans %}" required type="password" value="">
+                           placeholder="Enter a password." required type="password" value="">
                 </div>
                 <br>
                 <div class="form-group  required text-left hide">
@@ -53,13 +53,13 @@ Signup | {{ config['PUBLIC_CONFIG'].site.title }}
                 {{ form_field(form.apply, class="btn") }}
             </form>
         </div>
-        <div class="panel-footer text-left">{% trans %}Have an account?{% endtrans %}
-            <a class="pull-right" href={{ url_for('HomeView:signin') }}><b>{% trans %}Sign in{% endtrans %}</b></a>
+        <div class="panel-footer text-left">Have an account?
+            <a class="pull-right" href={{ url_for('HomeView:signin') }}><b>Sign in</b></a>
         </div>
     </div>
     <div class="text-center">
         <a class="back-to-site" href="{{ url_for('HomeView:index') }}">
-            &#8592;&nbsp;{% trans %}Home{% endtrans %} {{ config['PUBLIC_CONFIG'].site.title }}
+            &#8592;&nbsp;Home {{ config['PUBLIC_CONFIG'].site.title }}
         </a>
     </div>
 </div>
