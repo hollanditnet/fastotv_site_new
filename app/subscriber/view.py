@@ -1,3 +1,5 @@
+import json
+
 from flask_classy import FlaskView, route
 from flask import render_template, redirect, url_for, request, jsonify, Response
 from flask_login import login_required, current_user
@@ -11,7 +13,6 @@ from app.common.stream.entry import ProxyStream, ProxyVodStream
 from app.common.stream.forms import ProxyStreamForm, ProxyVodStreamForm
 import app.common.constants as constants
 from app import app
-import json
 
 
 # routes
@@ -206,7 +207,7 @@ class SubscriberView(FlaskView):
     @route('/remove_device/<did>', methods=['POST'])
     @login_required
     def remove_device(self, did):
-        current_user.remove_device(did)
+        current_user.remove_device(ObjectId(did))
         return render_template('subscriber/devices.html')
 
     @login_required
