@@ -107,7 +107,7 @@ class HomeView(FlaskView):
         try:
             email = self._confirm_link_generator.loads(token, salt=HomeView.SALT_LINK,
                                                        max_age=HomeView.CONFIRM_LINK_TTL)
-            confirm_user = Subscriber.objects(email=email).clear_cls_query().first()
+            confirm_user = Subscriber.objects(email=email).first()
             if confirm_user:
                 confirm_user.status = Subscriber.Status.ACTIVE
                 confirm_user.save()
@@ -152,7 +152,7 @@ class HomeView(FlaskView):
                 flash_error('Invalid email.')
                 return render_template('home/signup.html', form=form)
 
-            existing_user = Subscriber.objects(email=email).clear_cls_query().first()
+            existing_user = Subscriber.objects(email=email).first()
             if existing_user:
                 return redirect(url_for('HomeView:signin'))
 
@@ -181,7 +181,7 @@ class HomeView(FlaskView):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return Subscriber.objects(pk=user_id).clear_cls_query().first()
+    return Subscriber.objects(pk=user_id).first()
 
 
 def page_not_found(e):
