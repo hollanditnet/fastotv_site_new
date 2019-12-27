@@ -4,14 +4,14 @@ from flask_login import current_user
 from flask_mail import Message
 from itsdangerous import SignatureExpired, URLSafeTimedSerializer
 
-import app.common.constants as constants
-from app.common.utils.utils import is_valid_email, get_country_code_by_remote_addr
+import pyfastocloud_models.constants as constants
+from pyfastocloud_models.utils.utils import is_valid_email, get_country_code_by_remote_addr
 from app import app, mail, login_manager
 from app.home.forms import ContactForm
-from app.common.provider.entry import Provider  # forward declaration in ServersSettings
-from app.common.service.entry import ServiceSettings
+from pyfastocloud_models.provider.entry import Provider  # forward declaration in ServersSettings
+from pyfastocloud_models.service.entry import ServiceSettings
 from app.common.subscriber.forms import SignupForm, SigninForm
-from app.common.subscriber.login.entry import SubscriberUser, login_user_wrap
+from pyfastocloud_models.subscriber.login.entry import SubscriberUser, login_user_wrap
 
 
 def flash_success(text: str):

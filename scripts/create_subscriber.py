@@ -6,7 +6,7 @@ from mongoengine import connect
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from app.common.subscriber.login.entry import SubscriberUser
+from pyfastocloud_models.subscriber.login.entry import SubscriberUser
 
 PROJECT_NAME = 'create_provider'
 

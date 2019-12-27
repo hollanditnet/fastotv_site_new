@@ -5,13 +5,13 @@ from flask import render_template, redirect, url_for, request, jsonify, Response
 from flask_login import login_required, current_user
 
 from bson.objectid import ObjectId
-from app.common.subscriber.entry import Device
+from pyfastocloud_models.subscriber.entry import Device
 from app.common.service.forms import UploadM3uForm
-from app.common.utils.m3u_parser import M3uParser
-from app.common.utils.utils import is_valid_http_url
-from app.common.stream.entry import ProxyStream, ProxyVodStream
+from pyfastocloud_models.utils.m3u_parser import M3uParser
+from pyfastocloud_models.utils.utils import is_valid_http_url
+from pyfastocloud_models.stream.entry import ProxyStream, ProxyVodStream
 from app.common.stream.forms import ProxyStreamForm, ProxyVodStreamForm
-import app.common.constants as constants
+import pyfastocloud_models.constants as constants
 from app import app
 
 
