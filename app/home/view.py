@@ -11,7 +11,7 @@ from app.home.forms import ContactForm
 from pyfastocloud_models.provider.entry import Provider  # forward declaration in ServersSettings
 from pyfastocloud_models.service.entry import ServiceSettings
 from app.common.subscriber.forms import SignupForm, SigninForm
-from pyfastocloud_models.subscriber.login.entry import SubscriberUser, login_user_wrap
+from pyfastocloud_models.subscriber.entry import Subscriber, login_user_wrap
 
 
 def flash_success(text: str):
@@ -35,16 +35,16 @@ def post_login(form: SigninForm):
         return render_template('home/signin.html', form=form)
 
     email = form.email.data.lower()
-    check_user = SubscriberUser.objects(email=email, class_check=False).first()
+    check_user = Subscriber.objects(email=email).first()
     if not check_user:
         flash_error('User not found.')
         return render_template('home/signin.html', form=form)
 
-    if check_user.status == SubscriberUser.Status.NOT_ACTIVE:
+    if check_user.status == Subscriber.Status.NOT_ACTIVE:
         flash_error('User not active.')
         return render_template('home/signin.html', form=form)
 
-    if not SubscriberUser.check_password_hash(check_user['password'], form.password.data):
+    if not Subscriber.check_password_hash(check_user['password'], form.password.data):
         flash_error('Invalid password.')
         return render_template('home/signin.html', form=form)
 
@@ -107,9 +107,9 @@ class HomeView(FlaskView):
         try:
             email = self._confirm_link_generator.loads(token, salt=HomeView.SALT_LINK,
                                                        max_age=HomeView.CONFIRM_LINK_TTL)
-            confirm_user = SubscriberUser.objects(email=email, class_check=False).first()
+            confirm_user = Subscriber.objects(email=email).clear_cls_query().first()
             if confirm_user:
-                confirm_user.status = SubscriberUser.Status.ACTIVE
+                confirm_user.status = Subscriber.Status.ACTIVE
                 confirm_user.save()
                 login_user_wrap(confirm_user)
                 return redirect(url_for('HomeView:signin'))
@@ -152,11 +152,11 @@ class HomeView(FlaskView):
                 flash_error('Invalid email.')
                 return render_template('home/signup.html', form=form)
 
-            existing_user = SubscriberUser.objects(email=email, class_check=False).first()
+            existing_user = Subscriber.objects(email=email).clear_cls_query().first()
             if existing_user:
                 return redirect(url_for('HomeView:signin'))
 
-            new_user = SubscriberUser.make_subscriber(email, form.first_name.data, form.last_name.data,
+            new_user = Subscriber.make_subscriber(email, form.first_name.data, form.last_name.data,
                                                       form.password.data, form.country.data, form.language.data)
             new_user.save()
 
@@ -181,7 +181,7 @@ class HomeView(FlaskView):
 
 @login_manager.user_loader
 def load_user(user_id):
-    return SubscriberUser.objects(pk=user_id, class_check=False).first()
+    return Subscriber.objects(pk=user_id).clear_cls_query().first()
 
 
 def page_not_found(e):

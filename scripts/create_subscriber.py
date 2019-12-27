@@ -6,7 +6,7 @@ from mongoengine import connect
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from pyfastocloud_models.subscriber.login.entry import SubscriberUser
+from pyfastocloud_models.subscriber.entry import Subscriber
 
 PROJECT_NAME = 'create_provider'
 
@@ -24,8 +24,8 @@ if __name__ == '__main__':
 
     mongo = connect(host=argv.mongo_uri)
     if mongo:
-        new_user = SubscriberUser.make_subscriber(email=argv.email, first_name=argv.first_name,
+        new_user = Subscriber.make_subscriber(email=argv.email, first_name=argv.first_name,
                                                   last_name=argv.last_name, password=argv.password,
                                                   country=argv.country, language=argv.language)
-        new_user.status = SubscriberUser.Status.ACTIVE
+        new_user.status = Subscriber.Status.ACTIVE
         new_user.save()
