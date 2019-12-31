@@ -57,7 +57,7 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                                                            channel_id="{{ stream.id }}"
                                                            onclick="on_total_price_update()" value={{ stream.price
                                                            }}
-                                                           {% if stream.id in selected_streams.id %}
+                                                           {% if stream.id in selected_streams | map(attribute='id') %}
                                                            checked
                                                            {% endif %}
                                                     >
@@ -96,7 +96,7 @@ Channels | {{ config['PUBLIC_CONFIG'].site.title }}
                                                            channel_id="{{ vod.id }}"
                                                            onclick="on_total_price_update()" value={{ vod.price
                                                            }}
-                                                           {% if vod.id in selected_streams.id %}
+                                                           {% if vod.id in selected_streams.id | map(attribute='id')  %}
                                                            checked
                                                            {% endif %}
                                                     >

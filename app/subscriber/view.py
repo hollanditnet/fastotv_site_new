@@ -182,7 +182,8 @@ class SubscriberView(FlaskView):
         json_str = request.form['apply_channels_official_ids']
         if json_str:
             for sid in json.loads(json_str):
-                current_user.add_official_stream_by_id(ObjectId(sid))
+                oid = ObjectId(sid)
+                current_user.add_official_stream_by_id(oid)
         current_user.save()
         return redirect(url_for('SubscriberView:channels'))
 
