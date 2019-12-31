@@ -47,8 +47,8 @@ class SubscriberView(FlaskView):
 
         selected_streams = []
         for stream in current_user.streams:
-            sid = str(stream.sid.id)
-            selected_streams.append(sid)
+            front = stream.to_front_dict()
+            selected_streams.append(front)
         return render_template('subscriber/channels.html', streams=streams, selected_streams=selected_streams)
 
     @login_required
