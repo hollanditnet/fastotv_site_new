@@ -24,7 +24,7 @@ if __name__ == '__main__':
 
     mongo = connect(host=argv.mongo_uri)
     if mongo:
-        new_user = Subscriber.make_subscriber(email=argv.email, first_name=argv.first_name,
+        new_user = Subscriber.make_subscriber(email=argv.email.lower(), first_name=argv.first_name,
                                                   last_name=argv.last_name, password=argv.password,
                                                   country=argv.country, language=argv.language)
         new_user.status = Subscriber.Status.ACTIVE
