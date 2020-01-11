@@ -10,7 +10,7 @@ from gevent.pywsgi import WSGIServer
 
 PROJECT_NAME = 'fastotv'
 HOST = '0.0.0.0'
-PORT = 8081
+PORT = 8080
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(prog=PROJECT_NAME, usage='%(prog)s [options]')
