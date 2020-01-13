@@ -37,7 +37,7 @@ Devices | {{ config['PUBLIC_CONFIG'].site.title }}
                         <tr id='{{ device.id }}'>
                             <td>{{ loop.index }}</td>
                             <td>{{ device.name }}</td>
-                            <td>{{ ['NOT_ACTIVE', 'ACTIVE', 'TRIAL_FINISHED', 'BANNED'][device.status] }}
+                            <td>{{ ['NOT_ACTIVE', 'ACTIVE', 'BANNED'][device.status] }}
                             </td>
                             <td>{{ device.created_date }}</td>
                             <td>

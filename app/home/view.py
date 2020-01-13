@@ -44,6 +44,10 @@ def post_login(form: SigninForm):
         flash_error('User not active.')
         return render_template('home/signin.html', form=form)
 
+    if check_user.status == Subscriber.Status.DELETED:
+        flash_error('User removed.')
+        return render_template('home/signin.html', form=form)
+
     if not Subscriber.check_password_hash(check_user['password'], form.password.data):
         flash_error('Invalid password.')
         return render_template('home/signin.html', form=form)
